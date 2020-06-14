@@ -73,7 +73,7 @@ public class zzzzz {
 			}
 		});
 		btnNewButton.setBounds(20, 38, 89, 23);
-		frame.getContentPane().add(btnNewButton);
+                panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("New button");
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -99,14 +99,7 @@ public class zzzzz {
 		btnNewButton_2.setBounds(253, 38, 89, 23);
 		frame.getContentPane().add(btnNewButton_2);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel_1.setBackground(Color.YELLOW);
 		
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel_2.setBackground(Color.GREEN);
 		
 		
 	//	btnNewButton_2.setBounds(276, 21, 89, 23);

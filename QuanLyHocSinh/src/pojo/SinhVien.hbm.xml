@@ -12,16 +12,16 @@ Mapping DTD 3.0//EN"
 <property name="STT" type="java.lang.Integer" not-null="false">
 <column length="5" name="STT"/>
 </property>
-<property name="HoTen" type="string">
+<property name="HoTen" type="string" not-null="false">
 <column length="45" name="HoTen"/>
 </property>
-<property name="CMND" type="string" not-null="false">
+<property name="CMND" type="string" not-null="false" not-null="false">
 <column length="45" name="CMND"/>
 </property>
-<property name="GioiTinh" type="java.lang.Integer">
+<property name="GioiTinh" type="java.lang.Integer" not-null="false">
 <column length="2" name="GioiTinh"/>
 </property>
-<property name="MaLop" type="string">
+<property name="MaLop" type="string" not-null="true">
 <column length="45" name="MaLop"/>
 </property>
 </class>

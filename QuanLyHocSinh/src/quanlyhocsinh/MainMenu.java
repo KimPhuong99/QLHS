@@ -15,15 +15,17 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javafx.scene.paint.Color;
+import javax.swing.JFileChooser;
 import javax.swing.border.EtchedBorder;
 public class MainMenu {
     private JFrame jframe;
@@ -44,8 +46,53 @@ public class MainMenu {
     }
 
     private void initiablitia() {
+        //khung cưa số
         jframe=new JFrame();
-        jframe.setBounds(100, 100, 600, 500);
+        jframe.setSize(600, 500);
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jframe.getContentPane().setLayout(null);
+        // jpanel chính
+        JPanel jpanel = new JPanel();
+        jpanel.setBackground(java.awt.Color.lightGray);
+        jpanel.setBounds(0, 0, 600, 500);
+        jframe.getContentPane().add(jpanel);
+        jpanel.setLayout(null);
+        
+        //jpanel chứa jlabel UQAN LY THU VIEN
+        JPanel panel1 =new JPanel();
+        panel1.setLayout(null);
+        jpanel.add(panel1);
+        panel1.setBounds(0,0,600,100);
+        panel1.setBackground(java.awt.Color.ORANGE);
+        JLabel label=new JLabel("QUAN LY THU VIEN");
+        panel1.add(label);
+        label.setBounds(230,35,500,30);
+        
+        //Jbanel chứa 1 đống Button
+        JPanel panel2=new JPanel();
+        panel2.setLayout(new BoxLayout(panel2,BoxLayout.Y_AXIS));
+        jpanel.add(panel2);
+        panel2.setBounds(0,100,600,500);
+        panel2.setBackground(java.awt.Color.red);
+        JButton button1 = new JButton("import dữ liệu");
+        JFileChooser jf=new JFileChooser();
+        panel2.add(button1);
+        button1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button1.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int returnVal=jf.showOpenDialog(jframe);
+                String TenFile;
+                if(returnVal==jf.APPROVE_OPTION)
+                {
+                   java.io.File file = jf.getSelectedFile();
+                   TenFile=file.getName();
+                   
+                }
+            
+            }
+        });
+                
+        
     }
 }
