@@ -18,8 +18,8 @@ Mapping DTD 3.0//EN"
 <property name="CMND" type="string"  not-null="false">
 <column length="45" name="CMND"/>
 </property>
-<property name="GioiTinh" type="java.lang.Integer" not-null="false">
-<column length="2" name="GioiTinh"/>
+<property name="GioiTinh" type="string" not-null="false">
+<column length="5" name="GioiTinh"/>
 </property>
 <property name="MaLop" type="string" not-null="true">
 <column length="45" name="MaLop"/>

@@ -14,12 +14,12 @@ public class SinhVien implements java.io.Serializable{
     private int maSinhVien_id;
     private String CMND;
     private String HoTen;
-    private int GioiTinh;
+    private String GioiTinh;
     private String MaLop;
     public SinhVien(){
     
     }
-    public SinhVien(int stt,int mssv, String cmnd, String hoten, String malop, int gioitinh){
+    public SinhVien(int stt,int mssv, String hoten, String gioitinh, String cmnd, String malop){
         STT=stt;
         maSinhVien_id=mssv;
         CMND=cmnd;
@@ -51,10 +51,10 @@ public class SinhVien implements java.io.Serializable{
    public void setHoTen(String hoten){
        this.HoTen=hoten;
    }
-   public int getGioiTinh(){
+   public String getGioiTinh(){
        return this.GioiTinh;
    }
-   public void setGioiTinh(int gt){
+   public void setGioiTinh(String gt){
        this.GioiTinh=gt;
    }
    public String getMaLop(){

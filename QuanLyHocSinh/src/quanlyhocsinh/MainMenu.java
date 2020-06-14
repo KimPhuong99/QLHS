@@ -6,6 +6,7 @@
 package quanlyhocsinh;
 
 
+import dao.SinhVienDAO;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -34,6 +35,7 @@ import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 import javax.swing.JFileChooser;
 import javax.swing.border.EtchedBorder;
+import pojo.SinhVien;
 public class MainMenu {
     private JFrame jframe;
     public static void main(String[] args){
@@ -83,37 +85,60 @@ public class MainMenu {
         panel2.setBackground(java.awt.Color.red);
         JButton button1 = new JButton("import dữ liệu");
         JFileChooser jf=new JFileChooser();
+        //jf.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);chon foder
+       
+        
         panel2.add(button1);
         button1.setAlignmentX(Component.CENTER_ALIGNMENT);
         button1.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                int returnVal=jf.showOpenDialog(jframe);
-                String TenFile;
+                int returnVal=jf.showOpenDialog(null);
+               
                 if(returnVal==jf.APPROVE_OPTION)
                 {
-                   java.io.File file = jf.getSelectedFile();
-                   TenFile=file.getName();
+                   
+                   
+                   String path=jf.getSelectedFile().getAbsolutePath();
+                   String filename=jf.getSelectedFile().getName();
+                   
                    String line = "";
                    String splitBy = ",";  
                    BufferedReader br = null;  
                      try {
-                        br = new BufferedReader(new FileReader("C:\\Users\\Admin\\Documents\\GitHub\\QuanLyHocSinh\\JavaApplication4\\17HCB.txt"));
-                        System.out.println(TenFile);
+                        br = new BufferedReader(new FileReader(path));
+                        
                      } catch (FileNotFoundException ex) {
                         Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
                     }
                      try {
+                         int dem=0;
+                         String malop="";
                         while ((line = br.readLine()) != null)   //returns a Boolean value
                         {
+                            
                             String[] employee = line.split(splitBy);    // use comma as separator
-                            System.out.println("Employee [First Name=" + employee[0] + ", Last Name=" + employee[1] + ", Designation=" + employee[2] + ", Contact=" + employee[3] + ", Salary= " + employee[4] + "]");  
+                            //String malop = filename.substring(0, 5);
+                            //System.out.print(filename);
+                            if(dem==0)
+                            {
+                                dem=1;
+                                malop=employee[0];
+                                continue;
+                            }
+                            if(dem==1){
+                                dem=2;
+                                continue;
+                            }
+                            SinhVien sv;
+                            sv = new SinhVien(Integer.parseInt(employee[0]),Integer.parseInt(employee[1]),employee[2],employee[3],employee[4],malop);
+                            SinhVienDAO.ThemSinhVien(sv);
                         }
                      } catch (IOException ex) {
                         Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                     System.out.print("ok");
                      
-
             }
             }});
     }
