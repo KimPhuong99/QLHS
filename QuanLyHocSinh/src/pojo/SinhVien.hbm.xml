@@ -7,7 +7,7 @@ Mapping DTD 3.0//EN"
 <class catalog="kimphuong" name="pojo.SinhVien" table="sinhvien">
 <id name="maSinhVien_id" type="java.lang.Integer">
 <column length="10" name="MSSV"/>
-<generator class="native"/>
+
 </id>
 <property name="STT" type="java.lang.Integer" not-null="false">
 <column length="5" name="STT"/>
@@ -15,7 +15,7 @@ Mapping DTD 3.0//EN"
 <property name="HoTen" type="string" not-null="false">
 <column length="45" name="HoTen"/>
 </property>
-<property name="CMND" type="string" not-null="false" not-null="false">
+<property name="CMND" type="string"  not-null="false">
 <column length="45" name="CMND"/>
 </property>
 <property name="GioiTinh" type="java.lang.Integer" not-null="false">

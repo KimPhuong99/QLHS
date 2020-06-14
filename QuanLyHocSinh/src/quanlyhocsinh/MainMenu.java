@@ -24,6 +24,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 import javax.swing.JFileChooser;
 import javax.swing.border.EtchedBorder;
@@ -87,12 +94,27 @@ public class MainMenu {
                 {
                    java.io.File file = jf.getSelectedFile();
                    TenFile=file.getName();
-                   
-                }
-            
+                   String line = "";
+                   String splitBy = ",";  
+                   BufferedReader br = null;  
+                     try {
+                        br = new BufferedReader(new FileReader("C:\\Users\\Admin\\Documents\\GitHub\\QuanLyHocSinh\\JavaApplication4\\17HCB.txt"));
+                        System.out.println(TenFile);
+                     } catch (FileNotFoundException ex) {
+                        Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                     try {
+                        while ((line = br.readLine()) != null)   //returns a Boolean value
+                        {
+                            String[] employee = line.split(splitBy);    // use comma as separator
+                            System.out.println("Employee [First Name=" + employee[0] + ", Last Name=" + employee[1] + ", Designation=" + employee[2] + ", Contact=" + employee[3] + ", Salary= " + employee[4] + "]");  
+                        }
+                     } catch (IOException ex) {
+                        Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                     
+
             }
-        });
-                
-        
+            }});
     }
 }

@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate
+Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 
-<root>
-    
-</root>
+<hibernate-mapping>
+    <class catalog="kimphuong" name="pojo.MonHoc" table="sinhvien_monhoc">
+        <id name="maSinhVien" type="java.lang.Interger">
+            <column length="10" name="MSSV"></column>
+        </id>
+        <id name="MaLop" type="string">
+            <column lenght="45" name="MaLop"></column>
+        </id>
+        <id name="MaMon" type="string">
+            <column length="45" name="MaLop"></column>
+        </id>
+        <property name="GK" type="flaot" not-null="false">
+            <column length="3" name="GK"></column>
+        </property>
+        <property name="CK" type="float" not-null="false">
+            <column length="3" name="CK"></column>
+        </property>
+        <property name="DK" type="float" not-null="false">
+            <column length="3" name="DiemKhac"></column>
+        </property>
+        <property name="TK" type="float" not-null="false">
+            <column length="3" name="DiemTong"></column>
+        </property>
+        <many-to-one class="pojo.SinhVien" name="maSinhVien" fetch="join" lazy="false">
+            <column length="10" name="MSSV" not-null="true"></column>
+        </many-to-one>
+    </class>
+</hibernate-mapping>
