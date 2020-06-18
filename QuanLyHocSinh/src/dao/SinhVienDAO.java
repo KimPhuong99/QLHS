@@ -59,6 +59,7 @@ public class SinhVienDAO {
         }
         return true;
     }
+    
     public static void main(String[] args) {
       //SinhVien sv=new SinhVien(3,1712685,"83798217392","kahd jka","dhadhj",1);
       if(1==1)

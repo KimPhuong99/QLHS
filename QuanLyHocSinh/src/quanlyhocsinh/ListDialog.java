@@ -1,8 +1,10 @@
 package quanlyhocsinh;
 
+import dao.SinhVienDAO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import pojo.SinhVien;
 
 
 public class ListDialog extends JDialog
@@ -80,13 +82,30 @@ public class ListDialog extends JDialog
        label4.setBounds(20,5,70,30);
        panel4.add(label4);
        
+       JPanel panel45 = new JPanel();
+       panel45.setLayout(null);
+       panel45.setBackground(Color.LIGHT_GRAY);
+       panel45.setBounds(0, 200, 500, 50);
+       panel.add(panel45);
+       JLabel label45 = new JLabel("Giới tính");
+       label45.setBounds(20,5,70,30);
+       panel45.add(label45);
+       JCheckBox checkbox1 = new JCheckBox("Nữ");
+       checkbox1.setBounds(200, 5,50, 30);
+       checkbox1.setBackground(Color.LIGHT_GRAY);
+       panel45.add(checkbox1);
+       JCheckBox checkbox2 = new JCheckBox("Nam");
+       checkbox2.setBounds(300,5,100,30);
+       checkbox2.setBackground(Color.LIGHT_GRAY);
+       panel45.add(checkbox2);
+       
        JLabel label5 = new JLabel("Nhập đúng thứ tự");
        label5.setForeground(Color.YELLOW);
        label5.setBounds(350,200,340,20);
        panel.add(label5);
       
        JPanel panel6 = new JPanel();
-       panel6.setBounds(0,240,500,50);
+       panel6.setBounds(0,260,500,50);
        panel6.setBackground(Color.LIGHT_GRAY);
        panel6.setLayout(null);
        panel.add(panel6);
@@ -107,10 +126,10 @@ public class ListDialog extends JDialog
                String t3=text3.getText().toString();
                String t4=text4.getText().toString();
                if(t1!=""&&t2!=""&&t3!=""&&t4!=""){
-                   
-               }
+               java.util.List<SinhVien> ds =SinhVienDAO.LayDSSinhVien();
+               //SinhVien sv=SinhVien(ds.size()+1,Integer.parseInt(1),)
 
-            }
+            }}
            
        });
        Container contentPane = getContentPane();
