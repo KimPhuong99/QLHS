@@ -35,6 +35,7 @@ import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 import javax.swing.JFileChooser;
 import javax.swing.border.EtchedBorder;
+import static oracle.jrockit.jfr.events.Bits.longValue;
 import pojo.SinhVien;
 public class MainMenu {
     private JFrame jframe;
@@ -76,18 +77,15 @@ public class MainMenu {
         JLabel label=new JLabel("QUAN LY THU VIEN");
         panel1.add(label);
         label.setBounds(230,35,500,30);
-        
+        JFileChooser jf=new JFileChooser();//JFilerChooser để chọn file
         //Jbanel chứa 1 đống Button
         JPanel panel2=new JPanel();
         panel2.setLayout(new BoxLayout(panel2,BoxLayout.Y_AXIS));
         jpanel.add(panel2);
         panel2.setBounds(0,100,600,500);
         panel2.setBackground(java.awt.Color.red);
-        JButton button1 = new JButton("import dữ liệu");
-        JFileChooser jf=new JFileChooser();
-        //jf.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);chon foder
-       
         
+        JButton button1 = new JButton("import dữ liệu");
         panel2.add(button1);
         button1.setAlignmentX(Component.CENTER_ALIGNMENT);
         button1.addActionListener(new ActionListener(){
@@ -116,10 +114,7 @@ public class MainMenu {
                          String malop="";
                         while ((line = br.readLine()) != null)   //returns a Boolean value
                         {
-                            
                             String[] employee = line.split(splitBy);    // use comma as separator
-                            //String malop = filename.substring(0, 5);
-                            //System.out.print(filename);
                             if(dem==0)
                             {
                                 dem=1;
@@ -137,9 +132,20 @@ public class MainMenu {
                      } catch (IOException ex) {
                         Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                     System.out.print("ok");
-                     
+                     System.out.print("ok"); 
             }
             }});
+        JButton button2 = new JButton("Thêm một sinh viên mới.");
+        button2.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel2.add(button2);
+        button2.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ListDialog.showDialog(jframe);
+            }
+
+        
+        });
     }
 }
