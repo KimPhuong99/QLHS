@@ -6,6 +6,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import pojo.MonHoc;
 import pojo.SinhVien;
 
 
@@ -59,13 +60,14 @@ public class SinhVienDAO {
         }
         return true;
     }
+
     
     public static void main(String[] args) {
       //SinhVien sv=new SinhVien(3,1712685,"83798217392","kahd jka","dhadhj",1);
       if(1==1)
       {
-          System.out.print(SinhVienDAO.layThongTinhSinhVien(1712685).getMaSinhVien_id());
-          
+          //MonHoc mh = new MonHoc(1742001,"17HCB","CT001",0,0,0,0);
+          //SinhVienDAO.ThemSinhVienMonHoc(mh);
       }
       
     }

@@ -95,8 +95,6 @@ public class MainMenu {
                
                 if(returnVal==jf.APPROVE_OPTION)
                 {
-                   
-                   
                    String path=jf.getSelectedFile().getAbsolutePath();
                    String filename=jf.getSelectedFile().getName();
                    

@@ -7,7 +7,6 @@ Mapping DTD 3.0//EN"
 <class catalog="kimphuong" name="pojo.SinhVien" table="sinhvien">
 <id name="maSinhVien_id" type="java.lang.Integer">
 <column length="10" name="MSSV"/>
-
 </id>
 <property name="STT" type="java.lang.Integer" not-null="false">
 <column length="5" name="STT"/>

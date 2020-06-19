@@ -7,7 +7,7 @@ package pojo;
 
 import java.util.Date;
 public class MonHoc {
-    private int maSinhVien;
+    private SinhVien maSinhVien;
     private String MaLop;
     private String MaMon;
     private float GK;
@@ -17,7 +17,7 @@ public class MonHoc {
     public MonHoc(){
         
     }
-    public MonHoc(int mssv, String malop,String mamon, float gk,float ck,float dk,float tk){
+    public MonHoc(SinhVien mssv, String malop,String mamon, float gk,float ck,float dk,float tk){
         this.maSinhVien=mssv;
         this.MaLop=malop;
         this.MaMon=mamon;
@@ -26,10 +26,10 @@ public class MonHoc {
         this.DK=dk;
         this.TK=tk;
     }
-    public int getmssv(){
+    public SinhVien getmssv(){
         return this.maSinhVien;
     }
-    public void setmssv(int mssv)
+    public void setmssv(SinhVien mssv)
     {
         this.maSinhVien=mssv;
     }

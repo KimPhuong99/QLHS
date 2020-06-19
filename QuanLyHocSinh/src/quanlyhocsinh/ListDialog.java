@@ -16,7 +16,7 @@ public class ListDialog extends JDialog
                                     ) {
         Frame frame = JOptionPane.getFrameForComponent(frameComp);
         dialog = new ListDialog(frame);
-        dialog.setSize(500,400);
+        dialog.setSize(500,500);
         dialog.setVisible(true);
         return value;
     }
@@ -99,13 +99,13 @@ public class ListDialog extends JDialog
        checkbox2.setBackground(Color.LIGHT_GRAY);
        panel45.add(checkbox2);
        
-       JLabel label5 = new JLabel("Nhập đúng thứ tự");
+       final JLabel label5 = new JLabel("Nhập đúng thứ tự");
        label5.setForeground(Color.YELLOW);
-       label5.setBounds(350,200,340,20);
+       label5.setBounds(350,250,340,50);
        panel.add(label5);
       
        JPanel panel6 = new JPanel();
-       panel6.setBounds(0,260,500,50);
+       panel6.setBounds(0,300,500,50);
        panel6.setBackground(Color.LIGHT_GRAY);
        panel6.setLayout(null);
        panel.add(panel6);
@@ -125,11 +125,43 @@ public class ListDialog extends JDialog
                String t2=text2.getText().toString();
                String t3=text3.getText().toString();
                String t4=text4.getText().toString();
-               if(t1!=""&&t2!=""&&t3!=""&&t4!=""){
-               java.util.List<SinhVien> ds =SinhVienDAO.LayDSSinhVien();
-               //SinhVien sv=SinhVien(ds.size()+1,Integer.parseInt(1),)
+               String gioiTinh="";
+               if(checkbox1.isSelected()){
+                   gioiTinh = "Nữ";
+               }
+               if(checkbox2.isSelected()){
+                   gioiTinh="Nam";
+               }
+               if(gioiTinh==""){
+                   label5.setForeground(Color.red);
+                   label5.setText("Nhập sai giới tính!");
+               };
+               
+               if(t1.length()!=0&&t2.length()!=0&&t3.length()!=0&&t4.length()!=0&&gioiTinh!=""){
+                
+                java.util.List<SinhVien> ds =SinhVienDAO.LayDSSinhVien();
+                SinhVien sv= new SinhVien(ds.size()+1,Integer.parseInt(t1),t2,gioiTinh,t3,t4);
+                
+               if(SinhVienDAO.ThemSinhVien(sv)){
+                   ListDialog.dialog.setVisible(false);
+               }
+               else{
+                    label5.setForeground(Color.red);
+                   label5.setText("MSSV đã tồn tại!");
+                       }
+               
+            }else{
+                   label5.setForeground(Color.red);
+                   label5.setText("Nhập thiếu thông tin!");
+               }
+            }
 
-            }}
+       });
+       button2.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ListDialog.dialog.setVisible(false);
+                }
            
        });
        Container contentPane = getContentPane();
@@ -137,8 +169,6 @@ public class ListDialog extends JDialog
        pack();
       
     }
-
-    
     public void actionPerformed(ActionEvent e) {
         e.getActionCommand();
         ListDialog.dialog.setVisible(false);

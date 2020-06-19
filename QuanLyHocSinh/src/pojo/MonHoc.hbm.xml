@@ -2,33 +2,31 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate
 Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-
 <hibernate-mapping>
-    <class catalog="kimphuong" name="pojo.MonHoc" table="sinhvien_monhoc">
-        <id name="maSinhVien" type="java.lang.Interger">
-            <column length="10" name="MSSV"></column>
-        </id>
-        <id name="MaLop" type="string">
-            <column lenght="45" name="MaLop"></column>
-        </id>
-        <id name="MaMon" type="string">
-            <column length="45" name="MaLop"></column>
-        </id>
-        <property name="GK" type="flaot" not-null="false">
-            <column length="3" name="GK"></column>
-        </property>
-        <property name="CK" type="float" not-null="false">
-            <column length="3" name="CK"></column>
-        </property>
-        <property name="DK" type="float" not-null="false">
-            <column length="3" name="DiemKhac"></column>
-        </property>
-        <property name="TK" type="float" not-null="false">
-            <column length="3" name="DiemTong"></column>
-        </property>
-        <many-to-one class="pojo.SinhVien" name="maSinhVien" fetch="join" lazy="false">
-            <column length="10" name="MSSV" not-null="true"></column>
-        </many-to-one>
-    </class>
+<class catalog="kimphuong" name="pojo.MonHoc" table="sinhvien_monhoc">
+<id name="MaSinhVien" type="SinhVien">
+<column length="10" name="MSSV"/>
+</id>
+<id name="MaLop" type="string">
+<column length="45" name="MaLop"></column>
+</id>
+<id name="MaMon" type="string">
+<column length="45" name="MaMon"/>
+</id>
+<property name="GK" type="float" not-null="false">
+<column length="3" name="GK"/>
+</property>
+<property name="CK" type="float" not-null="false">
+<column length="3" name="CK"/>
+</property>
+<property name="DK" type="float" not-null="false">
+<column length="3" name="DiemKhac"/>
+</property>
+<property name="TK" type="float" not-null="false">
+<column length="3" name="DiemTong"/>
+</property>
+<many-to-one class="pojo.SinhVien" name="maSinhVien" fetch="join" lazy="false">
+<column length="10" name="MSSV" not-null="true"/>
+</many-to-one>
+</class>
 </hibernate-mapping>
