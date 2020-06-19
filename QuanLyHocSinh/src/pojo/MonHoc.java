@@ -26,10 +26,10 @@ public class MonHoc {
         this.DK=dk;
         this.TK=tk;
     }
-    public SinhVien getmssv(){
+    public SinhVien getMaSinhVien(){
         return this.maSinhVien;
     }
-    public void setmssv(SinhVien mssv)
+    public void setMaSinhVien(SinhVien mssv)
     {
         this.maSinhVien=mssv;
     }

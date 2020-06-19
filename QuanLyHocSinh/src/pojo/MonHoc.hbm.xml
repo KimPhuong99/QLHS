@@ -4,15 +4,14 @@ Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 <class catalog="kimphuong" name="pojo.MonHoc" table="sinhvien_monhoc">
-<id name="MaSinhVien" type="SinhVien">
-<column length="10" name="MSSV"/>
-</id>
-<id name="MaLop" type="string">
-<column length="45" name="MaLop"></column>
-</id>
-<id name="MaMon" type="string">
-<column length="45" name="MaMon"/>
-</id>
+<composite-id class="pojo.MonHoc" >
+        <key-property name="MaLop" type="string"  column="MaLop"/>
+        <key-property name="MaMon" type="string" column="MaMon" />
+        <key-many-to-one name="maSinhVien" column="MSSV" class="pojo.SinhVien"/>
+    </composite-id>
+ <many-to-one class="pojo.SinhVien" name="maSinhVien1" fetch="join" lazy="false" insert="false" update="false"  >
+<column length="10" name="MSSV" not-null="true"/>
+</many-to-one>
 <property name="GK" type="float" not-null="false">
 <column length="3" name="GK"/>
 </property>
@@ -25,8 +24,6 @@ Mapping DTD 3.0//EN"
 <property name="TK" type="float" not-null="false">
 <column length="3" name="DiemTong"/>
 </property>
-<many-to-one class="pojo.SinhVien" name="maSinhVien" fetch="join" lazy="false">
-<column length="10" name="MSSV" not-null="true"/>
-</many-to-one>
+
 </class>
 </hibernate-mapping>
