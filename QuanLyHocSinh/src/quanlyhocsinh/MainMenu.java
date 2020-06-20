@@ -127,8 +127,13 @@ public class MainMenu {
                                 dem=2;
                                 continue;
                             }
+                            int id=0;
+                                    if(SinhVienDAO.LayDSSinhVien().size()!=0){
+                                        id=SinhVienDAO.LayDSSinhVien().size();
+                                    }
                             SinhVien sv;
-                            sv = new SinhVien(Integer.parseInt(employee[0]),Integer.parseInt(employee[1]),employee[2],employee[3],employee[4],malop);
+                            sv = new SinhVien(id+1,Integer.parseInt(employee[1]),employee[2],employee[3],employee[4],malop);
+                            System.out.println(sv.getMaSinhVien_id()+" "+sv.getMaLop()+" id="+id);
                             SinhVienDAO.ThemSinhVien(sv);
                             
                         }
@@ -189,26 +194,48 @@ public class MainMenu {
                                 dem=2;
                                 continue;
                             }
+                            int idw=0;
+                                    if(SinhVienDAO.LayDSTKB().size()!=0){
+                                        idw=SinhVienDAO.LayDSTKB().size();
+                                    }
                             ThoiKhoaBieu tkb;
-                            tkb = new ThoiKhoaBieu(Integer.parseInt(employee[0]),employee[1],malop,employee[2],employee[3]);
+                            tkb = new ThoiKhoaBieu(idw+1,employee[1],malop,employee[2],employee[3]);
                             SinhVienDAO.ThemTKB(tkb);
-                            int met=1;
+                            
                             for(int i=0;i<dssv.size();i++){
-                                if(dssv.get(i).getMaLop()==malop){
-                                    MonHoc mh=new MonHoc(met,dssv.get(i).getMaSinhVien_id(),malop,employee[1],0,0,0,0);
+                                if(i==5){
+                                 //System.out.println(dssv.get(i).getMaLop()+" "+dssv.get(i).getMaSinhVien_id()+" "+i+"lllll"); 
+                                 //System.out.println(dssv.get(i).getMaLop()+"va"+" "+malop);
+                                 int id= MonHocDAO.LayDSMonHoc().size();
+                                 MonHoc mh=new MonHoc(id+1,dssv.get(i).getMaSinhVien_id(),malop,employee[1],0,0,0,0);
                                     MonHocDAO.ThemSinhVienMonHoc(mh);
-                                    met=met+1;
+                                }
+                                if(dssv.get(i).getMaLop().equals(malop)){
+                                    int id=0;
+                                    if(MonHocDAO.LayDSMonHoc().size()!=0){
+                                        id=MonHocDAO.LayDSMonHoc().size();
+                                    }
+                                    MonHoc mh=new MonHoc(id+1,dssv.get(i).getMaSinhVien_id(),malop,employee[1],0,0,0,0);
+                                    MonHocDAO.ThemSinhVienMonHoc(mh);
                                 }
                             }
-                            System.out.print(met); 
+                            
                         }
                      } catch (IOException ex) {
                         Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                     
-            } }
+            
+            } }  
+        });
+        JButton button4 = new JButton("Xoa sinh vien khoi mon hoc");
+        button4.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel2.add(button4);
+        button4.addActionListener(new ActionListener (){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DialogXoaSinhVien.showDialog(jframe);
+                }
             
         });
-        
     }
 }

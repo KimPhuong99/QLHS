@@ -7,10 +7,12 @@ package dao;
 
 import Util.HibernateUtil;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import pojo.MonHoc;
 import pojo.MonHocId;
 import pojo.SinhVien;
@@ -31,6 +33,21 @@ public class MonHocDAO {
         }
         return ds;
     }
+     public static List<MonHoc> layThongTinMonHoc(java.lang.Integer maSinhVien) {
+        List<MonHoc> ds= null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        
+        try {
+           Criteria crit = session.createCriteria(MonHoc.class);
+           crit.add(Restrictions.eq("maSinhVien",maSinhVien));
+           ds = crit.list();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return ds;
+    }
      public static void ThemSinhVienMonHoc(MonHoc mh){
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction=null;
@@ -38,7 +55,7 @@ public class MonHocDAO {
             transaction=session.beginTransaction();
             session.save(mh);
             transaction.commit();
-            System.out.println("ekekeke");
+           
             
         }catch(HibernateException ex){
             transaction.rollback();
@@ -49,13 +66,14 @@ public class MonHocDAO {
         }
     }
      public static void main(String[] args) {
-      SinhVien sv=new SinhVien(3,1712685,"83798217392","kahd jka","dhadhj","Nữ");
-      MonHocId mhid=new MonHocId(sv,"17HCB","CT001");
+     
       if(1==1)
       {
-          MonHoc mh = new MonHoc(1,1712684,"17HCB","CT001",0,0,0,0);
-          System.out.println("ekekeke");
-          MonHocDAO.ThemSinhVienMonHoc(mh);
+         List<MonHoc> mh=MonHocDAO.layThongTinMonHoc(1742001);
+         
+         for(int i=0;i<mh.size();i++){
+             System.out.println(mh.get(i).getMaMon());
+         }
           
       }
       

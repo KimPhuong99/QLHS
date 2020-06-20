@@ -62,6 +62,21 @@ public class SinhVienDAO {
         }
         return true;
     }
+     public static List<ThoiKhoaBieu> LayDSTKB(){
+        List<ThoiKhoaBieu> ds =null;
+        Session ses=HibernateUtil.getSessionFactory().openSession();
+        try{
+            String hql="select tkb from ThoiKhoaBieu tkb";
+            Query que=ses.createQuery(hql);
+            ds=que.list();
+            
+        }catch(HibernateException ex){
+            System.err.print(ex);
+        }finally{
+            ses.close();
+        }
+        return ds;
+    }
     public static void ThemTKB(ThoiKhoaBieu tkb){
         Session session = HibernateUtil.getSessionFactory().openSession();
         
@@ -85,7 +100,8 @@ public class SinhVienDAO {
       ThoiKhoaBieu tkb= new ThoiKhoaBieu(1,"18cct5","ct001","mon","23");
       if(1==1)
       {
-          SinhVienDAO.ThemTKB(tkb);
+          List<ThoiKhoaBieu> ds=SinhVienDAO.LayDSTKB();
+          System.out.println(ds.size());
       }
       
     }
