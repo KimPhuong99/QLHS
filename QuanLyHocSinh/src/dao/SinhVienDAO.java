@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import pojo.MonHoc;
 import pojo.SinhVien;
+import pojo.ThoiKhoaBieu;
 
 
 public class SinhVienDAO {
@@ -40,6 +41,7 @@ public class SinhVienDAO {
         }
         return sv;
     }
+    
     public static boolean ThemSinhVien(SinhVien sv){
         Session session = HibernateUtil.getSessionFactory().openSession();
         if(SinhVienDAO.layThongTinhSinhVien(sv.getMaSinhVien_id())!=null){
@@ -60,14 +62,30 @@ public class SinhVienDAO {
         }
         return true;
     }
-
+    public static void ThemTKB(ThoiKhoaBieu tkb){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        
+        Transaction transaction=null;
+        try{
+            transaction=session.beginTransaction();
+            session.save(tkb);
+            transaction.commit();
+            
+        }catch(HibernateException ex){
+            transaction.rollback();
+            System.err.println(ex);
+            System.out.print("tukckkkkkkkk");
+        }finally{
+            session.close();
+        }
+    }
     
     public static void main(String[] args) {
       //SinhVien sv=new SinhVien(3,1712685,"83798217392","kahd jka","dhadhj",1);
+      ThoiKhoaBieu tkb= new ThoiKhoaBieu(1,"18cct5","ct001","mon","23");
       if(1==1)
       {
-          //MonHoc mh = new MonHoc(1742001,"17HCB","CT001",0,0,0,0);
-          //SinhVienDAO.ThemSinhVienMonHoc(mh);
+          SinhVienDAO.ThemTKB(tkb);
       }
       
     }

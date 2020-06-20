@@ -7,45 +7,55 @@ package pojo;
 
 import java.util.Date;
 public class MonHoc {
-    private SinhVien maSinhVien;
+    private int Id;
+    private int maSinhVien;
     private String MaLop;
     private String MaMon;
     private float GK;
     private float CK;
     private float DK;
     private float TK;
+   // private SinhVien sv;
+   
     public MonHoc(){
         
     }
-    public MonHoc(SinhVien mssv, String malop,String mamon, float gk,float ck,float dk,float tk){
-        this.maSinhVien=mssv;
-        this.MaLop=malop;
+    public MonHoc(int id, int sv,String malop,String mamon, float gk,float ck,float dk,float tk){
+        this.Id=id;
+        this.maSinhVien=sv;
         this.MaMon=mamon;
+        this.MaLop=malop;
         this.GK=gk;
         this.CK=ck;
         this.DK=dk;
         this.TK=tk;
+        //this.sv=sv;
     }
-    public SinhVien getMaSinhVien(){
-        return this.maSinhVien;
-    }
-    public void setMaSinhVien(SinhVien mssv)
-    {
-        this.maSinhVien=mssv;
-    }
-    public String getMaLop(){
-        return this.MaLop;
-    }
-    public void setMaLop(String MaLop){
-        this.MaLop=MaLop;
-    }
-    public String getMaMon(){
-        return this.MaMon;
-    }
-    public void setMaMon(String mamon){
-        this.MaMon=mamon;
-    }
-    public float getGK()
+   public int getId(){
+       return this.Id;
+   }
+   public void setId(int i){
+       this.Id=i;
+   }
+   public int getmaSinhVien(){
+       return this.maSinhVien;
+   }
+   public void setMaSinhVien(int sv){
+       this.maSinhVien=sv;
+   }
+   public String getMaMon(){
+       return this.MaMon;
+   }
+   public void setMaMon(String s){
+       this.MaMon=s;
+   }
+   public String getMaLop(){
+       return this.MaLop;
+   }
+   public void setMaLop(String maLop){
+       this.MaLop=maLop;
+   }
+   public float getGK()
     {
         return this.GK;
     }
@@ -64,10 +74,10 @@ public class MonHoc {
     public void setDK(float dk){
         this.DK=dk;
     }
-    public float getDT(){
+    public float getTK(){
         return this.TK;
     }
-    public void setDT(float dt){
+    public void setTK(float dt){
         this.TK=dt;
     }
     

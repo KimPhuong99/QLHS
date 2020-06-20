@@ -50,5 +50,6 @@ Contributor(s):
         <property name="hibernate.connection.password">NTKp333#</property>
         <mapping resource="pojo/SinhVien.hbm.xml"/>
         <mapping resource="pojo/MonHoc.hbm.xml"/>
+        <mapping resource="pojo/ThoiKhoaBieu.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

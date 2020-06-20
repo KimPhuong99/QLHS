@@ -12,6 +12,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import pojo.MonHoc;
+import pojo.MonHocId;
 import pojo.SinhVien;
 
 public class MonHocDAO {
@@ -37,6 +38,7 @@ public class MonHocDAO {
             transaction=session.beginTransaction();
             session.save(mh);
             transaction.commit();
+            System.out.println("ekekeke");
             
         }catch(HibernateException ex){
             transaction.rollback();
@@ -48,10 +50,13 @@ public class MonHocDAO {
     }
      public static void main(String[] args) {
       SinhVien sv=new SinhVien(3,1712685,"83798217392","kahd jka","dhadhj","Nữ");
+      MonHocId mhid=new MonHocId(sv,"17HCB","CT001");
       if(1==1)
       {
-          MonHoc mh = new MonHoc(sv,"17HCB","CT001",0,0,0,0);
+          MonHoc mh = new MonHoc(1,1712684,"17HCB","CT001",0,0,0,0);
+          System.out.println("ekekeke");
           MonHocDAO.ThemSinhVienMonHoc(mh);
+          
       }
       
     }

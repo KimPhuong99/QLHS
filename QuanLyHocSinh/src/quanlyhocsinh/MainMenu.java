@@ -6,6 +6,7 @@
 package quanlyhocsinh;
 
 
+import dao.MonHocDAO;
 import dao.SinhVienDAO;
 import java.awt.EventQueue;
 
@@ -30,13 +31,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 import javax.swing.JFileChooser;
 import javax.swing.border.EtchedBorder;
 import static oracle.jrockit.jfr.events.Bits.longValue;
+import pojo.MonHoc;
 import pojo.SinhVien;
+import pojo.ThoiKhoaBieu;
 public class MainMenu {
     private JFrame jframe;
     public static void main(String[] args){
@@ -108,10 +112,10 @@ public class MainMenu {
                         Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
                     }
                      try {
-                         int dem=0;
+                       int dem=0;
                          String malop="";
                         while ((line = br.readLine()) != null)   //returns a Boolean value
-                        {
+                        {  
                             String[] employee = line.split(splitBy);    // use comma as separator
                             if(dem==0)
                             {
@@ -126,6 +130,7 @@ public class MainMenu {
                             SinhVien sv;
                             sv = new SinhVien(Integer.parseInt(employee[0]),Integer.parseInt(employee[1]),employee[2],employee[3],employee[4],malop);
                             SinhVienDAO.ThemSinhVien(sv);
+                            
                         }
                      } catch (IOException ex) {
                         Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -145,5 +150,65 @@ public class MainMenu {
 
         
         });
+        JButton button3=new JButton("Import thoi khoa bieu.");
+        button3.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel2.add(button3);
+        button3.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                  int returnVal=jf.showOpenDialog(null);
+                if(returnVal==jf.APPROVE_OPTION)
+                {
+                   String path=jf.getSelectedFile().getAbsolutePath();
+                   String filename=jf.getSelectedFile().getName();
+                   
+                   String line = "";
+                   String splitBy = ",";  
+                   BufferedReader br = null;  
+                     try {
+                        br = new BufferedReader(new FileReader(path));
+                        
+                     } catch (FileNotFoundException ex) {
+                        Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                     try {
+                          int dem=0;
+                         String malop="";
+                         List<SinhVien> dssv=SinhVienDAO.LayDSSinhVien();
+                         int stt=1;
+                        while ((line = br.readLine()) != null)   //returns a Boolean value
+                        {
+                            String[] employee = line.split(splitBy);    // use comma as separator
+                            if(dem==0)
+                            {
+                                dem=1;
+                                malop=employee[0];
+                                continue;
+                            }
+                            if(dem==1){
+                                dem=2;
+                                continue;
+                            }
+                            ThoiKhoaBieu tkb;
+                            tkb = new ThoiKhoaBieu(Integer.parseInt(employee[0]),employee[1],malop,employee[2],employee[3]);
+                            SinhVienDAO.ThemTKB(tkb);
+                            int met=1;
+                            for(int i=0;i<dssv.size();i++){
+                                if(dssv.get(i).getMaLop()==malop){
+                                    MonHoc mh=new MonHoc(met,dssv.get(i).getMaSinhVien_id(),malop,employee[1],0,0,0,0);
+                                    MonHocDAO.ThemSinhVienMonHoc(mh);
+                                    met=met+1;
+                                }
+                            }
+                            System.out.print(met); 
+                        }
+                     } catch (IOException ex) {
+                        Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                     
+            } }
+            
+        });
+        
     }
 }

@@ -7,6 +7,7 @@ package pojo;
 
 import java.util.Date;
 public class ThoiKhoaBieu {
+    private int Id;
     private String MaMon;
     private String MaLop;
     private String TenMonHoc;
@@ -14,11 +15,18 @@ public class ThoiKhoaBieu {
     public ThoiKhoaBieu(){
         
     }
-    public ThoiKhoaBieu(String mamon,String malop,String ten,String phong){
+    public ThoiKhoaBieu(int id,String mamon,String malop,String ten,String phong){
         this.MaLop=malop;
         this.MaMon=mamon;
         this.TenMonHoc=ten;
+        this.Id=id;
         this.PhongHoc=phong;
+    }
+    public int getId(){
+        return this.Id;
+    }
+    public void setId(int id){
+        this.Id=id;
     }
     public String getMaMon(){
         return this.MaMon;
@@ -32,16 +40,16 @@ public class ThoiKhoaBieu {
     public void setMaLop(String malop){
         this.MaLop=malop;
     }
-    public String getTenMH(){
+    public String getTenMonHoc(){
         return this.TenMonHoc;
     }
-    public void setTenMH(String ten){
+    public void setTenMonHoc(String ten){
         this.TenMonHoc=ten;
     }
-    public String getPhong(){
+    public String getPhongHoc(){
         return this.PhongHoc;
     }
-    public void setPhong(String phong){
+    public void setPhongHoc(String phong){
         this.PhongHoc=phong;
     }
 }

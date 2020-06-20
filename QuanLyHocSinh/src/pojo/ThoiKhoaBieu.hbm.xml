@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate
+Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class catalog="kimphuong" name="pojo.ThoiKhoaBieu" table="thoikhoabieu">
+        <id name="Id" type="java.lang.Integer">
+            <column name="id" length="5"></column>
+        </id>
+        <property name="MaMon" type="string" not-null="true">
+            <column length="45" name="MaMon"></column>
+        </property>
+        <property name="MaLop" type="string" not-null="true">
+            <column length="45" name="MaLop"/>
+        </property>
+        <property name="TenMonHoc" type="string" not-null="false">
+            <column length="45" name="TenMon"/>
+        </property>
+        <property name="PhongHoc" type="string" not-null="false">
+            <column length="45" name="PhongHoc"/>
+        </property>
+    </class>
+</hibernate-mapping>

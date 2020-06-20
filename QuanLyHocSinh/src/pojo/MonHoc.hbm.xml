@@ -4,14 +4,20 @@ Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 <class catalog="kimphuong" name="pojo.MonHoc" table="sinhvien_monhoc">
-<composite-id class="pojo.MonHoc" >
-        <key-property name="MaLop" type="string"  column="MaLop"/>
-        <key-property name="MaMon" type="string" column="MaMon" />
-        <key-many-to-one name="maSinhVien" column="MSSV" class="pojo.SinhVien"/>
-    </composite-id>
- <many-to-one class="pojo.SinhVien" name="maSinhVien1" fetch="join" lazy="false" insert="false" update="false"  >
-<column length="10" name="MSSV" not-null="true"/>
-</many-to-one>
+    <id name="Id" type="java.lang.Integer">
+        <column length="6" name="id" ></column>
+    </id>
+<property name="maSinhVien" type="java.lang.Integer" not-null="true">
+    <column name="MSSV" length="10"></column>
+</property>
+<property name="MaLop" type="string" not-null="true">
+    <column name="MaLop" length="45"></column>
+</property>
+<property name="MaMon" type="string" not-null="true">
+    <column name="MaMon" length="45"></column>
+</property>
+
+
 <property name="GK" type="float" not-null="false">
 <column length="3" name="GK"/>
 </property>
