@@ -11,7 +11,9 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 import pojo.MonHoc;
 import pojo.MonHocId;
@@ -48,6 +50,22 @@ public class MonHocDAO {
         }
         return ds;
     }
+     public static List<MonHoc> layThongTinTheoMaMonHon(String mamon){
+          List<MonHoc> ds= null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        
+        try {
+           Criteria crit = session.createCriteria(MonHoc.class);
+           crit.add(Restrictions.eq("MaMon",mamon));
+           ds = crit.list();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return ds;
+     }
+     
      public static void ThemSinhVienMonHoc(MonHoc mh){
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction=null;
@@ -65,15 +83,52 @@ public class MonHocDAO {
             session.close();
         }
     }
+     public static void ThemDiem(MonHoc sv){
+          Session session = HibernateUtil.getSessionFactory().openSession();
+      try{
+            session.beginTransaction();
+            List<MonHoc> ds=MonHocDAO.layThongTinMonHoc(sv.getmaSinhVien());
+            MonHoc employee=null;
+            for(int i=0;i<ds.size();i++){
+                if(sv.getMaMon().equals(ds.get(i).getMaMon())){
+                    employee=ds.get(i);
+                }
+            }
+            if(employee==null){
+            System.out.println(sv.getmaSinhVien());}
+            employee.setCK(sv.getCK());
+            employee.setDK(sv.getDK());
+            employee.setGK(sv.getGK());
+            employee.setTK(sv.getTK());
+            session.update(employee); 
+            session.getTransaction().commit();
+      }catch (HibernateException e) {
+          e.printStackTrace();
+            session.getTransaction().rollback();
+      }finally {
+         session.close(); 
+      }
+     }
+     public static void XoaSinhVienMonHoc(int id){
+        
+         Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            MonHoc employee = (MonHoc) session.get(MonHoc.class, id);
+            session.delete(employee);
+            session.getTransaction().commit();
+        }
+        catch (HibernateException e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+
+    }
      public static void main(String[] args) {
      
       if(1==1)
       {
-         List<MonHoc> mh=MonHocDAO.layThongTinMonHoc(1742001);
-         
-         for(int i=0;i<mh.size();i++){
-             System.out.println(mh.get(i).getMaMon());
-         }
+         MonHocDAO.XoaSinhVienMonHoc(14);
           
       }
       

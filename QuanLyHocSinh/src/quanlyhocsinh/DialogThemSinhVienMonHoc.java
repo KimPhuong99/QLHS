@@ -22,28 +22,28 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 import pojo.MonHoc;
+import pojo.SinhVien;
 import pojo.ThoiKhoaBieu;
 
 /**
  *
  * @author Admin
  */
-public class DialogXoaSinhVien extends JDialog
+public class DialogThemSinhVienMonHoc extends JDialog
                         implements ActionListener {
-    private static DialogXoaSinhVien dialog;
+    private static DialogThemSinhVienMonHoc dialog;
     private int id;
     public static void showDialog(Component frameComp
                                     ) {
         Frame frame = JOptionPane.getFrameForComponent(frameComp);
-        dialog = new DialogXoaSinhVien(frame);
+        dialog = new DialogThemSinhVienMonHoc(frame);
         dialog.setSize(500,500);
         dialog.setVisible(true);
         
     }
 
-    private DialogXoaSinhVien(Frame frame) {
+    private DialogThemSinhVienMonHoc(Frame frame) {
         super(frame, "them sinh vien", true);
         JPanel panel = new JPanel();
        panel.setLayout(null);
@@ -65,8 +65,8 @@ public class DialogXoaSinhVien extends JDialog
        text2.setBounds(230,90,170,30);
        JTextField text1=new JTextField();
        panel1.add(text1);
-       text1.setBounds(230,5,100,30);
-      
+       text1.setBounds(230,5,170,30);
+       
        final JLabel label5 = new JLabel("");
        label5.setForeground(Color.YELLOW);
        label5.setBounds(260,35,170,50);
@@ -84,78 +84,52 @@ public class DialogXoaSinhVien extends JDialog
        button2.setBackground(Color.red);
        panel6.add(button2);
        button2.setBounds(260,0,100,40);
-       List<MonHoc> ds=null;
+       //List<MonHoc> ds=null;
        id=0;
-      
-         JButton button1=new JButton("OK");
-       panel1.add(button1);
-       button1.setBounds(330,5,70,30);
-        button1.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               
-                String column[] = { "STT", "Mã môn", "Mã lớp","Tên môn học" };
-                String t1=text1.getText().toString();
-                if(t1.length()!=0){
-                List<ThoiKhoaBieu> dstkb=SinhVienDAO.LayDSTKB();
-                List<MonHoc> ds=MonHocDAO.layThongTinMonHoc(Integer.parseInt(t1));
-                id=Integer.parseInt(t1);
-                String[][] data= new String[ds.size()][4];
-                if(ds.size()!=0){
-                    
-                for(int i=0;i<ds.size();i++){
+         List<ThoiKhoaBieu> dstkb=SinhVienDAO.LayDSTKB();
+         System.out.println(dstkb.size());
+       String column[] = { "STT", "Mã môn", "Mã lớp","Tên môn học","Phòng học" };
+       String[][] data= new String[dstkb.size()][5];
+        for(int i=0;i<dstkb.size();i++){
                     data[i][0]=String.valueOf(i+1);
-                    data[i][1]=ds.get(i).getMaMon();
-                    data[i][2]=ds.get(i).getMaLop();
-                    data[i][3]="";
-                    
-                    for(int j=0;j<dstkb.size();j++){
-                        if(dstkb.get(j).getMaMon().equals(ds.get(i).getMaMon())){
-                            data[i][3]=dstkb.get(j).getTenMonHoc();
-                            break;
-                        }
-                    }    
+                    data[i][1]=dstkb.get(i).getMaMon();
+                    data[i][2]=dstkb.get(i).getMaLop();
+                    data[i][3]=dstkb.get(i).getTenMonHoc();
+                    data[i][4]=dstkb.get(i).getPhongHoc();
                 }
-                }else{
-                    label5.setForeground(Color.red);
-                    label5.setText("Không tìm thấy MSSV");
-                }
-                
-                JTable table=new JTable(data,column);
-                JScrollPane spTable = new JScrollPane(table);
-                spTable.setBounds(5,150,470,70);
-                panel.add(spTable);     
-                }else{
-                    label5.setForeground(Color.red);
-                    label5.setText("MSSV không được trống");
-                }
-                
-            }
-           
-       });
+         JTable table=new JTable(data,column);
+         JScrollPane spTable = new JScrollPane(table);
+         spTable.setBounds(5,150,470,70);
+         panel.add(spTable);   
+     
        button12.addActionListener(new ActionListener(){
+           
             @Override
             public void actionPerformed(ActionEvent e) {
-                String t2=text2.getText().toString();
                 String t1=text1.getText().toString();
-                List<MonHoc> ds=MonHocDAO.layThongTinMonHoc(Integer.parseInt(t1));
-                 System.out.println(t2+"k");
-                  for(int i=0;i<ds.size();i++){
-                    if(t2.equals(ds.get(i).getMaMon())){
-                        id=ds.get(i).getId();
-                        MonHocDAO.XoaSinhVienMonHoc(id);
-                        DialogXoaSinhVien.dialog.setVisible(false);
-                        System.out.println(ds.size());
+                String t2=text2.getText().toString();
+                if(t1.length()!=0&&t2.length()!=0){
+                    
+                    List<MonHoc> dsmh=MonHocDAO.LayDSMonHoc();
+                    int id=dsmh.get(0).getId();
+                    for(int j=0;j<dsmh.size();j++){
+                        if(id<dsmh.get(j).getId())
+                            id=dsmh.get(j).getId();
                     }
+                    SinhVien sv=SinhVienDAO.layThongTinhSinhVien(Integer.parseInt(t1));
+                    
+                    MonHoc mh=new MonHoc(id+1,Integer.parseInt(t1),sv.getMaLop(),t2,0,0,0,0);
+                    MonHocDAO.ThemSinhVienMonHoc(mh);
+                    DialogThemSinhVienMonHoc.dialog.setVisible(false);
                 }
-               
+                label5.setText("Dữ liệu nhập trống.");
             }
            
        });
        button2.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                DialogXoaSinhVien.dialog.setVisible(false); }
+                DialogThemSinhVienMonHoc.dialog.setVisible(false); }
            
        });
        
@@ -172,3 +146,4 @@ public class DialogXoaSinhVien extends JDialog
     }
     
 }
+

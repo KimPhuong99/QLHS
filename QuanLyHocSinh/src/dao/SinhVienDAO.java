@@ -2,10 +2,12 @@ package dao;
 
 import Util.HibernateUtil;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import pojo.MonHoc;
 import pojo.SinhVien;
 import pojo.ThoiKhoaBieu;
@@ -41,7 +43,34 @@ public class SinhVienDAO {
         }
         return sv;
     }
-    
+    public static List<SinhVien> LayDSSVTheoMaLop(String malop){
+        List<SinhVien> ds= null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+           Criteria crit = session.createCriteria(SinhVien.class);
+           crit.add(Restrictions.eq("MaLop",malop));
+           ds = crit.list();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return ds;
+    }
+    public static List<ThoiKhoaBieu> LayDSTKBTheoMaLop(String malop){
+         List<ThoiKhoaBieu> ds= null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+           Criteria crit = session.createCriteria(ThoiKhoaBieu.class);
+           crit.add(Restrictions.eq("MaLop",malop));
+           ds = crit.list();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return ds;
+     }
     public static boolean ThemSinhVien(SinhVien sv){
         Session session = HibernateUtil.getSessionFactory().openSession();
         if(SinhVienDAO.layThongTinhSinhVien(sv.getMaSinhVien_id())!=null){
