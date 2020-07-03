@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package quanlyhocsinh;
-
 import dao.MonHocDAO;
 import dao.SinhVienDAO;
 import java.awt.EventQueue;
@@ -35,6 +34,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 import javax.swing.JFileChooser;
+import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import static oracle.jrockit.jfr.events.Bits.longValue;
 import pojo.MonHoc;
@@ -44,7 +44,8 @@ import pojo.ThoiKhoaBieu;
 public class MainMenu {
 
     private JFrame jframe;
-
+    private JPanel jpanel;
+    private JPanel jpanelDangNhap;
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -59,23 +60,75 @@ public class MainMenu {
     }
 
     public MainMenu() {
-        ShowDia();
+       // ShowDia();
         initiablitia();
     }
     private void ShowDia(){
-        DangNhap.showDialog(jframe);
+        //DangNhap.showDialog(jframe);
     }
+    
     private void initiablitia() {
+        //jpanel dăng nhập
+        jpanelDangNhap=new JPanel();
+         jpanelDangNhap.setBackground(java.awt.Color.LIGHT_GRAY);
+         jpanelDangNhap.setLayout(null);
+         jpanelDangNhap.setBounds(0, 0, 600, 500);
+          JPanel panel11 = new JPanel();
+        panel11.setLayout(null);
+        panel11.setBackground(java.awt.Color.LIGHT_GRAY);
+        panel11.setBounds(0, 0, 500, 50);
+        jpanelDangNhap.add(panel11);
+        JLabel labelpn = new JLabel("UserName");
+        panel11.add(labelpn);
+        labelpn.setBounds(20, 5, 100, 30);
+         JTextField text1pn = new JTextField();
+        panel11.add(text1pn);
+        text1pn.setBounds(230, 5, 170, 30);
+        JLabel label2pn = new JLabel("Password");
+        jpanelDangNhap.add(label2pn);
+        label2pn.setBounds(20, 90, 170, 30);
+        JTextField text2pn = new JTextField();
+        jpanelDangNhap.add(text2pn);
+        text2pn.setBounds(230, 90, 170, 30);
+        JLabel labelcb = new JLabel("Nhập username và password");
+        jpanelDangNhap.add(labelcb);
+        labelcb.setForeground(java.awt.Color.YELLOW);
+        labelcb.setBounds(230,120,170,30);
+        JButton buttonpn =new JButton("OK");
+        jpanelDangNhap.add(buttonpn);
+        buttonpn.setBounds(270,170,90,30);
+       
+
         //khung cưa số
         jframe = new JFrame();
         jframe.setSize(600, 500);
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.getContentPane().setLayout(null);
+        jframe.getContentPane().add(jpanelDangNhap);
+        
+       
         // jpanel chính
-        JPanel jpanel = new JPanel();
+        jpanel = new JPanel();
         jpanel.setBackground(java.awt.Color.lightGray);
         jpanel.setBounds(0, 0, 600, 500);
-        jframe.getContentPane().add(jpanel);
+          buttonpn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String t1=text1pn.getText().toString();
+                String t2=text2pn.getText().toString();
+                if(t1.length()!=0&&t2.length()!=0){
+                    if(t1.equals("giaovu")&&t2.equals("giaovu")){
+                        jframe.setContentPane(jpanel);
+                    }
+                }
+                text1pn.setText("");
+                text2pn.setText("");
+                labelcb.setText("Username hoặc pass sai!");
+                labelcb.setForeground(java.awt.Color.red);
+                
+                  }
+            
+        });
         jpanel.setLayout(null);
         
         //jpanel chứa jlabel UQAN LY THU VIEN
@@ -226,7 +279,6 @@ public class MainMenu {
                     } catch (IOException ex) {
                         Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
                 }
             }
         });
@@ -238,7 +290,6 @@ public class MainMenu {
             public void actionPerformed(ActionEvent e) {
                 DialogXoaSinhVien.showDialog(jframe);
             }
-
         });
         JButton button5 = new JButton("Thêm Sinh viên môn học");
         button5.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -286,7 +337,6 @@ public class MainMenu {
                         while ((line = br.readLine()) != null) //returns a Boolean value
                         {
                             String[] employee = line.split(splitBy);    // use comma as separator
-
                             if (dem == 0) {
                                 dem = 1;
                                 mamon = employee[0];

@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import pojo.DangNhap;
 import pojo.MonHoc;
 import pojo.SinhVien;
 import pojo.ThoiKhoaBieu;
@@ -123,6 +124,69 @@ public class SinhVienDAO {
             session.close();
         }
     }
+    public static void themMatKhau(DangNhap dn){
+        Session session =HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction=null;
+        try{
+            transaction = session.beginTransaction();
+            session.save(dn);
+            transaction.commit();
+            
+        }catch(HibernateException ex){
+            transaction.rollback();
+            System.err.print(ex);
+        }finally{
+            session.close();
+        }
+    }
+    public static DangNhap LayThongTinDN(java.lang.Integer MSSV){
+        DangNhap sv = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            sv = (DangNhap) session.get(DangNhap.class,
+                    MSSV);
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return sv;
+    }
+    public static void SuaMatKhau(java.lang.Integer MSSV, String pass){
+         Session session = HibernateUtil.getSessionFactory().openSession();
+      try{
+            session.beginTransaction();
+            
+            DangNhap dn=SinhVienDAO.LayThongTinDN(MSSV);
+           dn.setPass(pass);
+            
+            
+            session.update(dn); 
+            session.getTransaction().commit();
+      }catch (HibernateException e) {
+          e.printStackTrace();
+            session.getTransaction().rollback();
+      }finally {
+         session.close(); 
+      }
+    }
+    
+    public static List<DangNhap> LayDSMK(){
+         List<DangNhap> ds =null;
+        Session ses=HibernateUtil.getSessionFactory().openSession();
+        try{
+            String hql="select dn from DangNhap dn";
+            Query que=ses.createQuery(hql);
+            ds=que.list();
+            
+        }catch(HibernateException ex){
+            System.err.print(ex);
+        }finally{
+            ses.close();
+        }
+        return ds;
+    }
+    
     
     public static void main(String[] args) {
       //SinhVien sv=new SinhVien(3,1712685,"83798217392","kahd jka","dhadhj",1);
