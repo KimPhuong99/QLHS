@@ -37,6 +37,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import static oracle.jrockit.jfr.events.Bits.longValue;
+import pojo.DangNhap;
 import pojo.MonHoc;
 import pojo.SinhVien;
 import pojo.ThoiKhoaBieu;
@@ -192,6 +193,8 @@ public class MainMenu {
                             sv = new SinhVien(id + 1, Integer.parseInt(employee[1]), employee[2], employee[3], employee[4], malop);
                             System.out.println(sv.getMaSinhVien_id() + " " + sv.getMaLop() + " id=" + id);
                             SinhVienDAO.ThemSinhVien(sv);
+                            DangNhap dn=new DangNhap(Integer.parseInt(employee[1]),employee[1]);
+                            SinhVienDAO.themMatKhau(dn);
 
                         }
                     } catch (IOException ex) {
