@@ -143,6 +143,7 @@ public class ListDialog extends JDialog
                 SinhVien sv= new SinhVien(ds.size()+1,Integer.parseInt(t1),t2,gioiTinh,t3,t4);
                 
                if(SinhVienDAO.ThemSinhVien(sv)){
+                   
                    ListDialog.dialog.setVisible(false);
                }
                else{

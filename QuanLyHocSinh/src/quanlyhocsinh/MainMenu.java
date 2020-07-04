@@ -6,6 +6,7 @@
 package quanlyhocsinh;
 import dao.MonHocDAO;
 import dao.SinhVienDAO;
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -34,6 +35,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 import javax.swing.JFileChooser;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import static oracle.jrockit.jfr.events.Bits.longValue;
@@ -43,7 +46,7 @@ import pojo.SinhVien;
 import pojo.ThoiKhoaBieu;
 
 public class MainMenu {
-
+    java.lang.Integer MSSV;
     private JFrame jframe;
     private JPanel jpanel;
     private JPanel jpanelDangNhap;
@@ -71,10 +74,10 @@ public class MainMenu {
     private void initiablitia() {
         //jpanel dăng nhập
         jpanelDangNhap=new JPanel();
-         jpanelDangNhap.setBackground(java.awt.Color.LIGHT_GRAY);
-         jpanelDangNhap.setLayout(null);
-         jpanelDangNhap.setBounds(0, 0, 600, 500);
-          JPanel panel11 = new JPanel();
+        jpanelDangNhap.setBackground(java.awt.Color.LIGHT_GRAY);
+        jpanelDangNhap.setLayout(null);
+        jpanelDangNhap.setBounds(0, 0, 600, 500);
+        JPanel panel11 = new JPanel();
         panel11.setLayout(null);
         panel11.setBackground(java.awt.Color.LIGHT_GRAY);
         panel11.setBounds(0, 0, 500, 50);
@@ -98,27 +101,87 @@ public class MainMenu {
         JButton buttonpn =new JButton("OK");
         jpanelDangNhap.add(buttonpn);
         buttonpn.setBounds(270,170,90,30);
+       //jpanel cho hoc sinh
+        JPanel panelhs=new JPanel();
+       panelhs.setLayout(new BoxLayout(panelhs,BoxLayout.Y_AXIS));
+       panelhs.setSize(600,500);
        
-
+       JLabel labelhs = new JLabel("MOODLE KHTN");
+       
+       panelhs.add(labelhs);
+       
+       labelhs.setAlignmentX(Component.CENTER_ALIGNMENT);
+    
+       
+       JButton btXemDiem=new JButton("Xem điểm");
+       panelhs.add(btXemDiem);
+       btXemDiem.setAlignmentX(Component.CENTER_ALIGNMENT);
+       btXemDiem.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                JPanel panelXemDiem=new JPanel();
+                panelXemDiem.setLayout(new BoxLayout(panelXemDiem,BoxLayout.Y_AXIS));
+                jframe.setContentPane(panelXemDiem);
+                panelXemDiem.setSize(600,500);
+                //panelXemDiem.setBackground(java.awt.Color.red);
+                
+                JLabel lbDiemThi=new JLabel("Điểm Tổng");
+                lbDiemThi.setForeground(java.awt.Color.BLACK);
+                lbDiemThi.setBounds(10,0,150,30);
+                panelXemDiem.add(lbDiemThi);
+                String column[] = { "STT","Môn", "Giữa kỳ", "Cuối kỳ","Điểm khác","Điểm tổng"};
+                List<MonHoc> dsmh=MonHocDAO.layThongTinMonHoc(MSSV);
+                String data[][]=new String[dsmh.size()][6];
+                int i=0;
+                 for (MonHoc w : dsmh) {
+                        data[i][0] = String.valueOf(i + 1);;
+                        data[i][1] = SinhVienDAO.LayTenMonHoc(w.getMaMon());
+                        data[i][2] = String.valueOf(w.getGK());
+                        data[i][3] = String.valueOf(w.getCK());
+                        data[i][4] = String.valueOf(w.getDK());
+                        data[i][5] = String.valueOf(w.getTK());
+                        i++;
+                        
+                    }
+                    JTable table = new JTable(data, column);
+                    JScrollPane spTable = new JScrollPane(table);
+                    spTable.setBounds(50,50, 470, 130);
+                    panelXemDiem.add(spTable);
+                    }
+           
+       });
         //khung cưa số
         jframe = new JFrame();
         jframe.setSize(600, 500);
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jframe.getContentPane().setLayout(null);
+        //jframe.getContentPane().setLayout(null);
         jframe.getContentPane().add(jpanelDangNhap);
         
        
-        // jpanel chính
+        // jpanel chính của admin
         jpanel = new JPanel();
         jpanel.setBackground(java.awt.Color.lightGray);
         jpanel.setBounds(0, 0, 600, 500);
-          buttonpn.addActionListener(new ActionListener(){
+        buttonpn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 String t1=text1pn.getText().toString();
                 String t2=text2pn.getText().toString();
                 if(t1.length()!=0&&t2.length()!=0){
-                    if(t1.equals("giaovu")&&t2.equals("giaovu")){
+                    List<DangNhap> dsdn=SinhVienDAO.LayDSMK();
+                    String gv="";
+                    String Pass="";
+                    for(DangNhap w: dsdn){
+                        if(w.getMSSV()==1)
+                            gv=w.getPass();
+                        if(Integer.parseInt(t1)==w.getMSSV())
+                        {
+                            MSSV=w.getMSSV();
+                            Pass=w.getPass();
+                        }
+                    }
+                    if(t2.equals(gv)){
                         jframe.setContentPane(jpanel);
                     }
                 }
@@ -191,9 +254,10 @@ public class MainMenu {
                             }
                             SinhVien sv;
                             sv = new SinhVien(id + 1, Integer.parseInt(employee[1]), employee[2], employee[3], employee[4], malop);
-                            System.out.println(sv.getMaSinhVien_id() + " " + sv.getMaLop() + " id=" + id);
+                           
                             SinhVienDAO.ThemSinhVien(sv);
                             DangNhap dn=new DangNhap(Integer.parseInt(employee[1]),employee[1]);
+                            System.out.println();
                             SinhVienDAO.themMatKhau(dn);
 
                         }

@@ -72,6 +72,21 @@ public class SinhVienDAO {
         }
         return ds;
      }
+    public static String LayTenMonHoc(String mamon){
+         List<ThoiKhoaBieu> ds= null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+           Criteria crit = session.createCriteria(ThoiKhoaBieu.class);
+           crit.add(Restrictions.eq("MaMon",mamon));
+           ds = crit.list();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return ds.get(0).getTenMonHoc();
+        
+    }
     public static boolean ThemSinhVien(SinhVien sv){
         Session session = HibernateUtil.getSessionFactory().openSession();
         if(SinhVienDAO.layThongTinhSinhVien(sv.getMaSinhVien_id())!=null){
@@ -125,6 +140,7 @@ public class SinhVienDAO {
         }
     }
     public static void themMatKhau(DangNhap dn){
+        //DangNhap d=new DangNhap(12,"12");
         Session session =HibernateUtil.getSessionFactory().openSession();
         Transaction transaction=null;
         try{
@@ -189,13 +205,8 @@ public class SinhVienDAO {
     
     
     public static void main(String[] args) {
-      //SinhVien sv=new SinhVien(3,1712685,"83798217392","kahd jka","dhadhj",1);
-      ThoiKhoaBieu tkb= new ThoiKhoaBieu(1,"18cct5","ct001","mon","23");
-      if(1==1)
-      {
-          List<ThoiKhoaBieu> ds=SinhVienDAO.LayDSTKB();
-          System.out.println(ds.size());
-      }
+      DangNhap dn=new DangNhap(12,"12");
+      SinhVienDAO.themMatKhau(dn);
       
     }
     
