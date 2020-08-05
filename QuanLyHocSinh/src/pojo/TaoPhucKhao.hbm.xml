@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<root>
+    
+</root>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate
+Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class catalog="kimphuong" name="pojo.TaoPhucKhao" table="taothoigianphuckhao">
+        <id name="STT" type="java.lang.Integer">
+            <column name="STT" length="5"></column>
+        </id>
+        <property name="Dau" type="string" not-null="true">
+            <column length="45" name="NgayDau"></column>
+        </property>
+        <property name="Cuoi" type="string" not-null="true">
+            <column length="45" name="NgayCuoi"/>
+        </property>
+       
+    </class>
+</hibernate-mapping>

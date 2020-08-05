@@ -89,7 +89,7 @@ public class XemDiem extends JDialog
         text2.setBounds(230, 90, 170, 30);
         //List<MonHoc> ds=null;
         id = 0;
-
+                     
         button12.addActionListener(new ActionListener() {
 
             @Override
@@ -104,8 +104,11 @@ public class XemDiem extends JDialog
                     int i = 0;
                     int dau=0;
                     int rot=0;
+                    System.out.println(dsmh.size()+"hhhhhh");
+                    
                     for (MonHoc w : dsmh) {
                         SinhVien sv = SinhVienDAO.layThongTinhSinhVien(w.getmaSinhVien());
+                        System.out.println(w.getmaSinhVien()+sv.getHoTen());
                         data[i][0] = String.valueOf(i + 1);;
                         data[i][1] = String.valueOf(sv.getMaSinhVien_id());
                         data[i][2] = sv.getHoTen();
@@ -114,6 +117,10 @@ public class XemDiem extends JDialog
                         data[i][5] = String.valueOf(w.getCK());
                         data[i][6] = String.valueOf(w.getDK());
                         data[i][7] = String.valueOf(w.getTK());
+                        System.out.println(w.getmaSinhVien()+" "+w.getCK()+" va data: "+data[i][1]+" "+data[i][5]);
+                        if(w.getCK()==0){
+                            continue;
+                        }
                         if(w.getTK()<5.0){
                             data[i][8]=" ";
                             rot++;
@@ -124,6 +131,7 @@ public class XemDiem extends JDialog
                        
                         i++;
                     }
+                     System.out.println(data[1][2]);
                     JTable table = new JTable(data, column);
                     JScrollPane spTable = new JScrollPane(table);
                     spTable.setBounds(5, 150, 470, 130);

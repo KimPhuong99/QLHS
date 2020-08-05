@@ -4,6 +4,8 @@ import dao.SinhVienDAO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import pojo.SinhVien;
 
 
@@ -140,8 +142,12 @@ public class ListDialog extends JDialog
                if(t1.length()!=0&&t2.length()!=0&&t3.length()!=0&&t4.length()!=0&&gioiTinh!=""){
                 
                 java.util.List<SinhVien> ds =SinhVienDAO.LayDSSinhVien();
-                SinhVien sv= new SinhVien(ds.size()+1,Integer.parseInt(t1),t2,gioiTinh,t3,t4);
                 
+               // SinhVien sv= new SinhVien(ds.size()+1,Integer.parseInt(t1),t2,gioiTinh,t3,t4);
+                
+               // convert dữ liệu sang UFT-8
+                 SinhVien sv= new SinhVien(ds.size()+1,Integer.parseInt(t1),t2,gioiTinh,t3,t4);
+                System.out.println(t4);
                if(SinhVienDAO.ThemSinhVien(sv)){
                    
                    ListDialog.dialog.setVisible(false);
